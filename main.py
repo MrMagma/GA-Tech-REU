@@ -119,11 +119,17 @@ with open("data.csv", "r+") as data:
     neurons = 0
     for n, *p in r:
         neurons = int(n)
-    neurons = neurons + 1
+    if neurons % 100 == 0:
+        neurons = neurons + 100
+    else:
+        neurons = neurons + 1
 
     w = csv.writer(data)
     while True:
         performance = run(neurons)
         w.writerow([neurons] + performance)
         print(f"Model with {neurons} neurons converged with accuracy {performance[len(performance) - 1]}")
-        neurons = neurons + 1
+        if neurons % 100 == 0:
+            neurons = neurons + 100
+        else:
+            neurons = neurons + 1
